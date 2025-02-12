@@ -16,9 +16,6 @@
         <div class="collapse navbar-collapse" id="mainNavbar">
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link" href="/imageRecommendation">이미지</a>
-                </li>
-                <li class="nav-item">
                     <a class="nav-link" href="#">추천 여행지</a>
                 </li>
                 <li class="nav-item">

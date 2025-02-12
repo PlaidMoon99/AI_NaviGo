@@ -11,6 +11,5 @@ public interface IF_preferenceDao {
 
     public String getPreferenceById(String memberId);
     public void setUserClickInfo(UserClickDTO userclickdto);
-    public String getPopularCat3();
 
 }

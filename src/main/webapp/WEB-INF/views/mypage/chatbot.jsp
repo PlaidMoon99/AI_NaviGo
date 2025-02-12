@@ -6,11 +6,14 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page import="com.nevigo.ai_navigo.dto.MemberDTO" %>
 <%
-  // 세션에서 userId 가져오기
-  MemberDTO memberInfo = (MemberDTO) session.getAttribute("memberInfo");
-  String userId = (memberInfo != null) ? memberInfo.getMemberId() : "Guest"; // 로그인되지 않은 경우 기본값 "Guest"
+  // 세션에서 로그인된 사용자 아이디 가져오기
+  String userId = (String) session.getAttribute("userId");
+
+  // 로그인된 사용자가 없으면 기본값 설정
+  if (userId == null) {
+    userId = "Guest";  // 기본값 (예: 'Guest' 또는 '사용자')
+  }
 %>
 <!DOCTYPE html>
 <html lang="ko">

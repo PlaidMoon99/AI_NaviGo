@@ -20,32 +20,36 @@
     </style>
 </head>
 <body>
-
 <!-- 공통 네비게이션 -->
 <jsp:include page="/WEB-INF/views/layout/nav.jsp" />
 
 <div class="container">
     <h1 class="title">여행지 상세 정보</h1>
-
         <%
-        // 좌표 정보를 위한 변수 선언
-        String mapX = "";
-        String mapY = "";
-        String mlevel = "";
+            // 좌표를 포함한 기본 정보를 사용하기 위해 변수들을 미리 선언
+            String mapX = "";
+            String mapY = "";
+            String mlevel = "";
 
-        // 컨트롤러에서 받은 items 배열 가져오기
-        JSONArray items = (JSONArray) request.getAttribute("items");
-        if (items != null && items.length() > 0) {
-            JSONObject item = items.getJSONObject(0);
+            // 컨트롤러에서 전달받은 items 배열을 이용
+            JSONArray items = (JSONArray) request.getAttribute("items");
+            if (items != null && items.length() > 0) {
+                JSONObject item = items.getJSONObject(0);
 
-            // 좌표 관련 값 추출
-            mapX = item.optString("mapx", "").trim();
-            mapY = item.optString("mapy", "").trim();
-            mlevel = item.optString("mlevel", "").trim();
-    %>
-
+                // 좌표 관련 값은 나중에 지도 초기화 시 사용
+                mapX = item.optString("mapx", "").trim();
+                mapY = item.optString("mapy", "").trim();
+                mlevel = item.optString("mlevel", "").trim();
+        %>
     <!-- 제목 -->
-    <h2><%= item.optString("title", "제목 없음").trim() %></h2>
+        <%
+            String title = item.optString("title", "").trim();
+            if (!title.isEmpty()) {
+        %>
+    <h2><%= title %></h2>
+        <%
+            }
+        %>
 
     <!-- 이미지 -->
     <div class="image-container">
@@ -75,7 +79,6 @@
         </div>
         <%
             }
-
             String overview = item.optString("overview", "").trim();
             if (!overview.isEmpty()) {
         %>
@@ -85,29 +88,19 @@
         </div>
         <%
             }
-
-            // ✅ 홈페이지 URL 중복 제거 및 하나만 출력하도록 수정
             String homepage = item.optString("homepage", "").trim();
             if (!homepage.isEmpty()) {
-                // HTML 태그 제거하고 URL만 추출
-                String homepageUrl = homepage.replaceAll(".*?href=\"(.*?)\".*", "$1");
-
-                // 만약 URL이 http로 시작하지 않으면 원래 값 사용
-                if (!homepageUrl.startsWith("http")) {
-                    homepageUrl = homepage;
-                }
         %>
         <div class="info-box">
             <h3>홈페이지</h3>
             <p>
-                <a href="<%= homepageUrl %>" target="_blank">
-                    <%= homepageUrl %>
+                <a href="<%= homepage %>" target="_blank">
+                    <%= homepage %>
                 </a>
             </p>
         </div>
         <%
             }
-
             String tel = item.optString("tel", "").trim();
             if (!tel.isEmpty()) {
         %>
@@ -117,6 +110,7 @@
         </div>
         <%
             }
+            // 지도 좌표 info-box는 제거합니다.
         } else {
         %>
         <p>데이터를 불러오지 못했습니다.</p>
@@ -124,16 +118,19 @@
             }
         %>
 
-        <!-- 지도 영역 -->
+        <!-- 지도 영역 제목 -->
         <div class="info-box">
             <h3>지도</h3>
+            <!-- 지도 영역 -->
             <div id="map"></div>
+            <!-- Kakao Map API 스크립트 및 지도 초기화 -->
             <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=1566bd1d6f68d1023bc9a09a03089078"></script>
             <script>
                 <%
-                   // 좌표 값이 있을 때만 지도 초기화
+                   // 좌표 값이 존재할 경우에만 지도 초기화
                    if (!mapX.isEmpty() && !mapY.isEmpty() && !mlevel.isEmpty()) {
                 %>
+                // Kakao Map API는 위도(mapY), 경도(mapX) 순서입니다.
                 var container = document.getElementById('map');
                 var options = {
                     center: new kakao.maps.LatLng(<%= mapY %>, <%= mapX %>),
@@ -141,9 +138,11 @@
                 };
                 var map = new kakao.maps.Map(container, options);
 
-                // 마커 표시
+                // 마커 생성
                 var markerPosition = new kakao.maps.LatLng(<%= mapY %>, <%= mapX %>);
-                var marker = new kakao.maps.Marker({ position: markerPosition });
+                var marker = new kakao.maps.Marker({
+                    position: markerPosition
+                });
                 marker.setMap(map);
                 <% } %>
             </script>

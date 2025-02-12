@@ -47,12 +47,4 @@ public class preferenceService_Impl implements IF_preferenceService{
 
         ifpreferencedao.setUserClickInfo(userclickdto);
     }
-
-    @Override
-    public String getPopularCat3() throws Exception {
-
-
-
-        return ifpreferencedao.getPopularCat3();
-    }
 }

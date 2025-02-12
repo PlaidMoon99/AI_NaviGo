@@ -13,19 +13,9 @@
     <!-- After: 명시적 컬럼 지정 -->
     <insert id="setUserClickInfo" parameterType="com.nevigo.ai_navigo.dto.UserClickDTO">
         INSERT INTO user_activity
-            (memberid, title, contentid, cat1, cat2, cat3, clicked_at)
+            (member_id, contentid, cat1, cat2, cat3, clicked_at)
         VALUES
-            (#{memberid}, #{title}, #{contentid}, #{cat1}, #{cat2}, #{cat3}, DEFAULT)
+            (#{member_id}, #{contentid}, #{cat1}, #{cat2}, #{cat3}, DEFAULT)
     </insert>
-<!--    public String getPopularCat3();-->
-    <select id="getPopularCat3" resultType="String">
-        SELECT cat3, COUNT(*) AS clickCount
-        FROM user_activity
-        WHERE clicked_at >= DATE_SUB(NOW(), INTERVAL 7 DAY)
-        GROUP BY cat3
-        ORDER BY clickCount DESC
-            LIMIT 1;
-
-    </select>
 
 </mapper>

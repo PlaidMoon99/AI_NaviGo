@@ -84,7 +84,7 @@
                 <span class="nav-link active" onclick="showSection('profile')">개인정보 수정</span>
             </li>
             <li class="nav-item">
-                <span class="nav-link" onclick="showSection('history')">나의 여행 일정</span>
+                <span class="nav-link" onclick="showSection('history')">나의 히스토리</span>
             </li>
             <li class="nav-item">
                 <span class="nav-link" onclick="showSection('preference')">여행 취향 수정</span>

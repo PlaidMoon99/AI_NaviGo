@@ -32,11 +32,6 @@
     .form-group {
       margin-bottom: 15px;
     }
-    .content {
-      display: flex;
-      justify-content: center;
-      padding-left: 30px;
-    }
   </style>
 </head>
 
