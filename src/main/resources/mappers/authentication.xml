@@ -9,8 +9,8 @@
     </select>
     <!-- 회원가입(member 테이블에 insert) 하기 위한 구문 -->
     <insert id="insMember" parameterType="com.nevigo.ai_navigo.dto.MemberDTO">
-        insert into member(member_id, member_name, member_pw, member_gender, member_grade, reg_date, upt_date)
-        values (#{memberId}, #{memberName}, #{memberPw}, #{memberGender}, default, default, default)
+        insert into member(member_id, member_name, member_pw, member_gender, member_grade, reg_date, upt_date, member_email)
+        values (#{memberId}, #{memberName}, #{memberPw}, #{memberGender}, default, default, default, #{memberEmail})
     </insert>
     <!-- 사용자의 여행 선호 취향 ins -->
     <insert id="insPreference" parameterType="java.util.Map">

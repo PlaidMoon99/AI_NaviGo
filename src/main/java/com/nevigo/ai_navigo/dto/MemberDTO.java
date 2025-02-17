@@ -1,9 +1,8 @@
 package com.nevigo.ai_navigo.dto;
+
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-
-import java.time.LocalDate;
 
 @Getter
 @Setter
@@ -14,4 +13,5 @@ public class MemberDTO {
     private String memberPw;
     private String memberGender;
     private String memberGrade;
+    private String memberEmail;
 }

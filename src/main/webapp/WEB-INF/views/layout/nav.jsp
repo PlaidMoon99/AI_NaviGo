@@ -22,10 +22,14 @@
                     <a class="nav-link" href="/main/recommended">추천 여행지</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">AI여행지 생성</a>
+                    <a class="nav-link" href="#">국내 여행지 생성</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/foreign/create">해외 여행지 생성</a>
                 </li>
 
-                <%-- session에 memberInfo가 있으면 마이 페이지와 Logout 버튼 표시 --%>
+
+            <%-- session에 memberInfo가 있으면 마이 페이지와 Logout 버튼 표시 --%>
                 <% if (session.getAttribute("memberInfo") != null) { %>
                 <li class="nav-item">
                     <a class="nav-link" href="/mypage">마이 페이지</a>
