@@ -22,5 +22,7 @@ public class MemberUpdateService {
     public void updateMember(MemberDTO member) {
         memberUpdateDao.updateMember(member);  // DAO의 updateMember 메서드 호출
     }
+
+
 }
 
