@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.nevigo.ai_navigo.dao.PreferenceDao">
+    <select id="getPreferenceById" resultType="string">
+        SELECT prefer_purpose FROM preference WHERE member_id = #{memberId}
+    </select>
+
+    <update id="updatePreference">
+        UPDATE preference
+        SET prefer_purpose = #{preference}, upt_date = NOW()
+        WHERE member_id = #{memberId}
+    </update>
+
+    <insert id="insertPreference">
+        INSERT INTO preference (member_id, prefer_purpose, reg_date, upt_date)
+        VALUES (#{memberId}, #{preference}, NOW(), NOW())
+    </insert>
+</mapper>
