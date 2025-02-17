@@ -65,10 +65,8 @@
     <!-- 저장된 카테고리를 확인 -->
     <p>저장된 선호 여행 취향: ${savedCategory}</p>
 
-    <!-- 저장 성공 알림 -->
-    <div id="saveAlert" class="alert alert-success" role="alert">
-        성공적으로 저장되었습니다!
-    </div>
+    <!-- 저장 성공 popup -->
+    <div id="saveAlert" class="alert" style="display: none; position: fixed; top: 20px; right: 20px; z-index: 1000;"></div>
 
     <div class="row">
         <script>
@@ -164,7 +162,7 @@
     <!-- 저장 버튼 -->
     <div class="d-flex justify-content-between mt-4">
         <button type="button" class="btn btn-secondary" onclick="window.history.back()">Cancel</button>
-        <button type="button" class="btn btn-primary" onclick="savePreference()">Save</button>
+        <button type="button" class="btn btn-primary" onclick="selectCategory()">Save</button>
     </div>
 </div>
 
@@ -197,8 +195,9 @@
         // 현재 선택 적용
         cardElement.classList.add('selected-card');
 
+        //update db에 저장하는 script
         // 선택한 값을 서버로 전달
-        fetch('/updatePreference', {
+        fetch('/mypage/updatePreference', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -208,11 +207,34 @@
             .then(response => {
                 if (response.ok) {
                     console.log("Preference updated successfully!");
+
+                    // 저장된 카테고리를 업데이트
+                    savedCategory = category;
+
+                    // 성공 팝업 표시
+                    showPopup("성공적으로 저장되었습니다!", "success");
                 } else {
                     console.error("Failed to update preference.");
                 }
-            });
+            })
+            .catch(error => {
+            console.error("Error during preference update:", error);
+        });
     }
+    // 팝업 메시지 표시 함수
+    function showPopup(message, type) {
+        const alertDiv = document.getElementById('saveAlert');
+        alertDiv.textContent = message;
+        alertDiv.className = `alert alert-${type}`;
+        alertDiv.style.display = 'block';
+
+        // 3초 후 자동으로 팝업 숨김
+        setTimeout(() => {
+            alertDiv.style.display = 'none';
+        }, 3000);
+    }
+
+
 </script>
 
 
