@@ -72,7 +72,7 @@ public class mypageController {
             // Preference 저장/수정 처리
             try {
                 // Preference 저장/수정 처리 - 인스턴스를 사용
-                preUpdateService_impl.saveOrUpdatePreference(memberId, preference);
+                preUpdateService_Impl.saveOrUpdatePreference(memberId, preference);
                 return "Preference updated successfully!";
             } catch (Exception e) {
                 e.printStackTrace();
