@@ -1,18 +1,18 @@
 package com.nevigo.ai_navigo.controller;
+import com.nevigo.ai_navigo.dao.IF_TravelHistoryDao;
 import com.nevigo.ai_navigo.dao.IF_changePwDao;
-import com.nevigo.ai_navigo.service.ChangePwService;
-import com.nevigo.ai_navigo.service.IF_changePwService;
-import com.nevigo.ai_navigo.service.PreUpdateService_Impl;
+import com.nevigo.ai_navigo.dto.ForeignPlanDTO;
+import com.nevigo.ai_navigo.service.*;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import com.nevigo.ai_navigo.dto.MemberDTO;
-import com.nevigo.ai_navigo.service.IF_preferenceService;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -29,11 +29,45 @@ public class mypageController {
         this.changePwService = changePwService;
         this.preUpdateService_Impl = preUpdateService_Impl;
 
+
     }
 
     @Autowired
     HttpSession session;
 
+    @Autowired
+    private IF_TravelHistoryDao travelHistoryDao;
+
+    // 여행 기록 페이지
+    @RequestMapping(value = "/mypage/history", method = RequestMethod.GET)
+    public String showHistoryPage(Model model, HttpSession session) {
+        // 세션에서 member_id 가져오기
+        String memberId = (String) session.getAttribute("member_id");
+
+        if (memberId != null) {
+            // memberId로 해당 사용자의 여행 계획 목록을 불러옴
+            List<ForeignPlanDTO> planList = travelHistoryDao.getPlansByMemberId(memberId);
+            if (planList.isEmpty()) {
+                model.addAttribute("message", "여행 계획이 없습니다.");
+            } else {
+                model.addAttribute("planList", planList);
+            }
+        } else {
+            // 로그인이 안 되어 있으면 로그인 페이지로 리다이렉트
+            return "redirect:/login";
+        }
+
+        return "redirect:/foreign/plan/{plan_id}"; // JSP 페이지로 반환
+    }
+
+
+    // 상세 여행 계획 보기
+    @RequestMapping(value = "/foreign/plan/{plan_id}", method = RequestMethod.GET)
+    public String showPlanDetail(@PathVariable("plan_id") int planId, Model model) {
+        ForeignPlanDTO planDetail = travelHistoryDao.getPlanDetail(planId);
+        model.addAttribute("planDetail", planDetail);
+        return "foreign/planDetail";
+    }
 
     // 사용자 ID로 저장된 선호도 가져오기 및 섹션 처리
     @GetMapping
