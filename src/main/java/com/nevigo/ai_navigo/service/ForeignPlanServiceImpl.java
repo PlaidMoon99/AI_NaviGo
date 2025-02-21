@@ -1,6 +1,7 @@
 package com.nevigo.ai_navigo.service;
 
 import com.nevigo.ai_navigo.dao.IF_ForeignPlanDao;
+import com.nevigo.ai_navigo.dao.IF_TravelHistoryDao;
 import com.nevigo.ai_navigo.dto.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,7 @@ public class ForeignPlanServiceImpl implements IF_ForeignPlanService {
 
     @Autowired
     private IF_ForeignPlanDao foreignPlanDao;
+
 
     @Autowired
     private RestTemplate restTemplate;
@@ -356,5 +358,7 @@ public class ForeignPlanServiceImpl implements IF_ForeignPlanService {
     public List<ForeignPlacePhotoDTO> getPlacePhotosByPlanId(Long planId) throws Exception {
         return foreignPlanDao.getPlacePhotosByPlanId(planId);
     }
+
+
 
 }
