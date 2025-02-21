@@ -185,7 +185,6 @@
 
     // 서버에서 전달된 과거 저장된 값
     var savedCategory = "${savedCategory != null ? savedCategory : ''}";
-    console.log("Saved Category (from DB):", savedCategory);
 
     // DOMContentLoaded 이벤트: 저장된 카테고리 강조 표시
     document.addEventListener("DOMContentLoaded", () => {
