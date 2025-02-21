@@ -15,4 +15,5 @@ public interface IF_ForeignPlanService {
     Long createPlanFromJson(Map<String, Object> planData, String memberId) throws Exception;
     void savePlacePhotos(Long planId, Map<String, String> photos) throws Exception;
     List<ForeignPlacePhotoDTO> getPlacePhotosByPlanId(Long planId) throws Exception;
+
 }
