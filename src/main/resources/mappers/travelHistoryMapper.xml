@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.nevigo.ai_navigo.dao.IF_TravelHistoryDao">
+
+    <select id="getPlansByMemberId" resultType="com.nevigo.ai_navigo.dto.ForeignPlanDTO">
+        SELECT
+            plan_id AS planId,
+            member_id AS memberId,
+            destination,
+            start_date AS startDate,
+            end_date AS endDate,
+            created_at AS createdAt,
+            upt_date AS uptDate
+        FROM
+            foreign_plans
+        WHERE
+            member_id = #{memberId}
+    </select>
+
+</mapper>
